@@ -1,9 +1,9 @@
 # File: Wordle.py
 
-"""
-This module is the starter file for the Wordle assignment.
-BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
-"""
+# """
+# This module is the starter file for the Wordle assignment.
+# BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
+# """
 
 # Dev team: Reed & Jake
 
