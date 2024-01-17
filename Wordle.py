@@ -22,7 +22,8 @@ def wordle():
         num = random.randint(0,(len(FIVE_LETTER_WORDS)-1))
         wotd = FIVE_LETTER_WORDS[num]
         return wotd
-    
+    # Reed, 1/16/2024, 6:30pm: Defined function to place word chosen in first row. 
+    # You will need to call a choose_a_word instance if you delete display_word later.
     def display_word():
         word = choose_a_word()
         i = 1
