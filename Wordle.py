@@ -1,9 +1,11 @@
 # File: Wordle.py
 
-"""
-This module is the starter file for the Wordle assignment.
-BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
-"""
+# """
+# This module is the starter file for the Wordle assignment.
+# BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
+# """
+
+# Dev team: Reed & Jake
 
 import random
 
@@ -15,8 +17,26 @@ def wordle():
     def enter_action(s):
         gw.show_message("You have to implement this method.")
 
+    # Reed, 1/16/2024, 6pm: Defined function to call random word from by index number (0 - length of list minus one) from wordle list
+    def choose_a_word():
+        num = random.randint(0,(len(FIVE_LETTER_WORDS)-1))
+        wotd = FIVE_LETTER_WORDS[num]
+        wotd = wotd.upper()
+        return wotd
+    # Reed, 1/16/2024, 6:30pm: Defined function to place word chosen in first row. 
+    # You will need to call a choose_a_word instance if you delete display_word later.
+    def display_word():
+        word = choose_a_word()
+        i = 5
+        for letter in word:
+            gw.set_square_letter(0, i - N_COLS, letter)
+            i+=1
+            print(letter)
+
     gw = WordleGWindow()
+    display_word()
     gw.add_enter_listener(enter_action)
+
 
 # Startup code
 
