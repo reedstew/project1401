@@ -76,7 +76,9 @@ def wordle():
         wotd = choose_a_word()
             # display_word()
         gw.add_enter_listener(enter_action)
-
+        wordle()
+        
+# Jake, 1/27/2024, 1:20pm All of the french stuff is added I added the same thing but it pulls from the french dictionary. To start the program it prompts what language.... I dont know if this is how we want to do it
     elif LANG == 'FR':
 
         with open("dictionnaire.txt", 'r', encoding='utf-8') as file:
@@ -90,6 +92,8 @@ def wordle():
                 gw.show_message("Voici un message temporaire")
             else:
                 gw.show_message("Ce mot n'est pas dans la liste")
+
+            gw.change_current_row()
 
         def choose_a_french_word():
             return random.choice(french_words)
@@ -107,10 +111,13 @@ def wordle():
 
         gw = WordleGWindow()
 
-        display_wordFR()
+ #       display_wordFR()
+        
 
         # Assuming your event listener setup is within the graphics module
         gw.add_enter_listener(lambda mots: enter_actionFR(mots))
+        wordle()
+       
 
 
 
@@ -118,4 +125,4 @@ def wordle():
 # Startup code
 
 if __name__ == "__main__":
-    wordle()
+   wordle()
