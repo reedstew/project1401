@@ -199,6 +199,10 @@ class WordleGWindow:
             self.set_square_letter(row, col, " ")
             self.set_square_color(row, col, UNKNOWN_COLOR)
 
+    def change_current_row(self):
+        current_row = self.get_current_row()
+        self.set_current_row(current_row + 1)
+
     def add_enter_listener(self, fn):
         self._enter_listeners.append(fn)
 
