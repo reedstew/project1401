@@ -10,23 +10,30 @@ import random
 
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
-
+LANG = 'ENG'
 def wordle():
+    lang_input = input('Language English or Francais?: ')
+    if lang_input[0].lower() == 'f':
+        LANG = 'FR'
+    
+
+
+    if LANG =='ENG':
 
     #Jake, 1/19/2024, 6:30pm: Defined function to take wotd and then check if it is in the dictionary or not.
-    def enter_action(user):
-        nonlocal i
+        def enter_action(user):
+            nonlocal i
         # see what the user guessed
 
         if user.lower() in FIVE_LETTER_WORDS:
-            # (gw.show_message("This is a temporary message for testing"))
+                # (gw.show_message("This is a temporary message for testing"))
             # First try congrats
             if user == wotd:
                 gw.show_message("WOW! You got it first try!")
             else:
                 setcolor(user)
-        else:
-            gw.show_message("Not in the word list")
+            else:
+                gw.show_message("Not in the word list")
 
         i+=1
         gw.set_current_row(i)
@@ -43,33 +50,70 @@ def wordle():
                 gw.set_square_color(i,(ea-1),MISSING_COLOR)
 
 
-    # Reed, 1/16/2024, 6pm: Defined function to call random word from by index number (0 - length of list minus one) from wordle list
-    def choose_a_word():
-        num = random.randint(0,(len(FIVE_LETTER_WORDS)-1))
-        wotd = FIVE_LETTER_WORDS[num]
-        wotd = wotd.upper()
+        # Reed, 1/16/2024, 6pm: Defined function to call random word from by index number (0 - length of list minus one) from wordle list
+        def choose_a_word():
+            num = random.randint(0,(len(FIVE_LETTER_WORDS)-1))
+            wotd = FIVE_LETTER_WORDS[num]
+            wotd = wotd.upper()
         print(wotd)
-        return wotd
+            return wotd
     
-    # Reed, 1/16/2024, 6:30pm: Defined function to place word chosen in first row. 
-    # You will need to call a choose_a_word instance if you delete display_word later.
-    # def display_word():
-    #     word = choose_a_word()
-    #     i = 5
-    #     for letter in word:
-    #         gw.set_square_letter(0, i - N_COLS, letter)
-    #         i+=1
-    #         print(letter)
+        # Reed, 1/16/2024, 6:30pm: Defined function to place word chosen in first row. 
+        # You will need to call a choose_a_word instance if you delete display_word later.
+        # def display_word():
+        #     word = choose_a_word()
+        #     i = 5
+        #     for letter in word:
+        #         gw.set_square_letter(0, i - N_COLS, letter)
+        #         i+=1
+        #         print(letter)
 
     #a counter to keep track of the row we are on
     i = 0
 
     #instantiate
-    gw = WordleGWindow()
+        gw = WordleGWindow()
 
     wotd = choose_a_word()
-    # display_word()
-    gw.add_enter_listener(enter_action)
+        # display_word()
+        gw.add_enter_listener(enter_action)
+
+    elif LANG == 'FR':
+
+        with open("dictionnaire.txt", 'r', encoding='utf-8') as file:
+            french_words = [word.strip().upper() for word in file.readlines() if len(word.strip()) == 5]
+
+        if not french_words:
+            raise ValueError("No 5-letter words found in the French dictionary.")
+
+        def enter_actionFR(mots):
+            if mots.upper() in french_words:
+                gw.show_message("Voici un message temporaire")
+            else:
+                gw.show_message("Ce mot n'est pas dans la liste")
+
+        def choose_a_french_word():
+            return random.choice(french_words)
+
+        def display_wordFR():
+            mots = choose_a_french_word()
+            i = 5
+            for letter in mots:
+                gw.set_square_letter(0, i - N_COLS, letter)
+                i += 1
+                print(letter)
+            return mots
+
+        # Assuming the following lines are part of your program
+
+        gw = WordleGWindow()
+
+        display_wordFR()
+
+        # Assuming your event listener setup is within the graphics module
+        gw.add_enter_listener(lambda mots: enter_actionFR(mots))
+
+
 
 
 # Startup code
