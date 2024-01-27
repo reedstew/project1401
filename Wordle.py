@@ -23,33 +23,45 @@ def wordle():
         LANG = 'ENG'
 
     if LANG =='ENG':
+        #track if first try
+        first = 0
+
         #Jake, 1/19/2024, 6:30pm: Defined function to take wotd and then check if it is in the dictionary or not.
         def enter_action(user):
-            global iRow # keep track of row
+            nonlocal iRow
+            nonlocal first
             # see what the user guessed
             if user.lower() in FIVE_LETTER_WORDS:
                     # (gw.show_message("This is a temporary message for testing"))
                 # First try congrats
-                if user == wotd:
-                    gw.show_message("WOW! You got it first try!")
+                if user == wotd and first == 0:
+                    gw.show_message("First try!!! Wow, you should invest in stocks today!")
+                elif user == wotd:
+                    gw.show_message("WOW! You are amazing!")
                     set_color(user)
                 else:
                     set_color(user)
                 iRow += 1
                 gw.set_current_row(iRow)
-        
+            else:
+                gw.show_message("Not a word. Try again, and read more books!")
+            first += 1
 
         # Reed, 1/26/2024, 3:30pm: Defined function to set the color of the tiles based on the guess
         def set_color(user):
+            #help with duplicates
+            track = {letter: 0 for letter in user}
             # loop through the squares and match the rows.
             for ea in range(len(user)):
                 if user[ea] == wotd[ea]:
-                    gw.set_square_color(i,(ea + 1),CORRECT_COLOR)
-                elif user[ea] in wotd:
-                    gw.set_square_color(i,(ea + 1),PRESENT_COLOR)
+                    gw.set_square_color(iRow,ea,CORRECT_COLOR)
+                    track[user[ea]] += 1
+                elif user[ea] in wotd and track[user[ea]] == 0:
+                    gw.set_square_color(iRow,ea,PRESENT_COLOR)
+                    track[user[ea]] += 1
                 else:
-                    gw.set_square_color(i,(ea + 1),MISSING_COLOR)
-
+                    gw.set_square_color(iRow,ea,MISSING_COLOR)
+            print(track)
 
         # Reed, 1/16/2024, 6pm: Defined function to call random word from by index number (0 - length of list minus one) from wordle list
         def choose_a_word():
