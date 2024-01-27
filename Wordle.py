@@ -25,38 +25,36 @@ def wordle():
             nonlocal i
         # see what the user guessed
 
-        if user.lower() in FIVE_LETTER_WORDS:
-                # (gw.show_message("This is a temporary message for testing"))
-            # First try congrats
-            if user == wotd:
-                gw.show_message("WOW! You got it first try!")
-            else:
-                setcolor(user)
-            else:
-                gw.show_message("Not in the word list")
-
+            if user.lower() in FIVE_LETTER_WORDS:
+                    # (gw.show_message("This is a temporary message for testing"))
+                # First try congrats
+                if user == wotd:
+                    gw.show_message("WOW! You got it first try!")
+                else:
+                    setcolor(user)
         i+=1
         gw.set_current_row(i)
+        
 
-    # Reed, 1/26/2024, 3:30pm: Defined function to set the color of the tiles based on the guess
-    def setcolor(user):
-        # loop through the squares and match the rows.
-        for ea in user:
-            if user[ea] == wotd[ea]:
-                gw.set_square_color(i,(ea+1),CORRECT_COLOR)
-            elif user[ea] in wotd:
-                gw.set_square_color(i,(ea-1),PRESENT_COLOR)
-            else:
-                gw.set_square_color(i,(ea-1),MISSING_COLOR)
+        # Reed, 1/26/2024, 3:30pm: Defined function to set the color of the tiles based on the guess
+        def setcolor(user):
+            # loop through the squares and match the rows.
+            for ea in user:
+                if user[ea] == wotd[ea]:
+                    gw.set_square_color(i,(ea+1),CORRECT_COLOR)
+                elif user[ea] in wotd:
+                    gw.set_square_color(i,(ea-1),PRESENT_COLOR)
+                else:
+                    gw.set_square_color(i,(ea-1),MISSING_COLOR)
 
 
-        # Reed, 1/16/2024, 6pm: Defined function to call random word from by index number (0 - length of list minus one) from wordle list
-        def choose_a_word():
-            num = random.randint(0,(len(FIVE_LETTER_WORDS)-1))
-            wotd = FIVE_LETTER_WORDS[num]
-            wotd = wotd.upper()
-        print(wotd)
-            return wotd
+            # Reed, 1/16/2024, 6pm: Defined function to call random word from by index number (0 - length of list minus one) from wordle list
+            def choose_a_word():
+                num = random.randint(0,(len(FIVE_LETTER_WORDS)-1))
+                wotd = FIVE_LETTER_WORDS[num]
+                wotd = wotd.upper()
+                print(wotd)
+                return wotd
     
         # Reed, 1/16/2024, 6:30pm: Defined function to place word chosen in first row. 
         # You will need to call a choose_a_word instance if you delete display_word later.
@@ -68,14 +66,14 @@ def wordle():
         #         i+=1
         #         print(letter)
 
-    #a counter to keep track of the row we are on
-    i = 0
+        #a counter to keep track of the row we are on
+        i = 0
 
-    #instantiate
+        #instantiate
         gw = WordleGWindow()
 
-    wotd = choose_a_word()
-        # display_word()
+        wotd = choose_a_word()
+            # display_word()
         gw.add_enter_listener(enter_action)
 
     elif LANG == 'FR':
