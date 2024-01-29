@@ -34,7 +34,13 @@ def wordle():
     elif LANG == 'FR':
         colorblind_input = input('Etes-vous daltonien? (oui/no): ')
 
-    if colorblind_input[0].lower() == 'y' or colorblind_input[0].lower() == 'o':
+    if colorblind_input[0].lower() == 'y':
+        print('The color representing  a correctly placed letter is Blue.\nThe color representing a letter that is present in the word is Orange.')
+        CORRECT_COLOR = "#1F7DF1"
+        PRESENT_COLOR = "#F19A1F"
+
+    elif colorblind_input[0].lower() == 'o':
+        print('La couleur qui représente des lettres qui sont bien placée est le bleu.\nLa couleur qui représente une lettre qui est présente dans le mot est Orange.')
         CORRECT_COLOR = "#1F7DF1"
         PRESENT_COLOR = "#F19A1F"
     elif colorblind_input[0].lower() == 'n':
