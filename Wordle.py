@@ -30,7 +30,7 @@ def wordle():
         print('Must enter a valid language answer')
 
     if LANG == 'ENG':
-        colorblind_input = input('Are you colorbline? (y/n): ')
+        colorblind_input = input('Are you colorblind? (y/n): ')
     elif LANG == 'FR':
         colorblind_input = input('Etes-vous daltonien? (oui/no): ')
 
@@ -63,6 +63,7 @@ def wordle():
                 # First try congrats
                 if user == wotd and first == 0:
                     gw.show_message("First try!!! Wow, you should invest in stocks today!")
+                    set_color(user)
                 elif user == wotd:
                     gw.show_message("WOW! You are amazing!")
                     set_color(user)
