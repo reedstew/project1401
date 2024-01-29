@@ -10,6 +10,9 @@ import random
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
 
+# Change colors for colorblind:
+CORRECT_COLOR = "#1F7DF1"
+PRESENT_COLOR = "#F19A1F"
 #Initiate LANG variable
 LANG = 'ENG'
 
