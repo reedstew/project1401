@@ -10,9 +10,6 @@ import random
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
 
-# Change colors for colorblind:
-CORRECT_COLOR = "#1F7DF1"
-PRESENT_COLOR = "#F19A1F"
 # Initiate LANG variable
 LANG = 'ENG'
 
@@ -24,6 +21,28 @@ def wordle():
         LANG = 'FR'
     elif lang_input[0].lower() == 'e':
         LANG = 'ENG'
+    else:
+        print('Must enter a valid language answer')
+
+    if LANG == 'ENG':
+        colorblind_input = input('Are you colorblind? (y/n): ')
+    elif LANG == 'FR':
+        colorblind_input = input('Etes-vous daltonien? (oui/no): ')
+
+    if colorblind_input[0].lower() == 'y':
+        print('The color representing  a correctly placed letter is Blue.\nThe color representing a letter that is present in the word is Orange.')
+        CORRECT_COLOR = "#1F7DF1"
+        PRESENT_COLOR = "#F19A1F"
+
+    elif colorblind_input[0].lower() == 'o':
+        print('La couleur qui représente des lettres qui sont bien placée est le bleu.\nLa couleur qui représente une lettre qui est présente dans le mot est Orange.')
+        CORRECT_COLOR = "#1F7DF1"
+        PRESENT_COLOR = "#F19A1F"
+    elif colorblind_input[0].lower() == 'n':
+        CORRECT_COLOR = "#66BB66"
+        PRESENT_COLOR = "#CCBB66" 
+
+
 
     if LANG =='ENG':
         #track if first try
@@ -39,6 +58,7 @@ def wordle():
                 # First try congrats
                 if user == wotd and first == 0:
                     gw.show_message("First try!!! Wow, you should invest in stocks today!")
+                    set_color(user)
                 elif user == wotd:
                     gw.show_message("WOW! You are amazing!")
                     set_color(user)
@@ -95,49 +115,68 @@ def wordle():
         
 # Jake, 1/27/2024, 1:20pm All of the french stuff is added I added the same thing but it pulls from the french dictionary. To start the program it prompts what language.... I dont know if this is how we want to do it
     elif LANG == 'FR':
+            first = 0
+            
+            with open("dictionnaire.txt", 'r', encoding='utf-8') as file:
+                french_words = [word.strip().upper() for word in file.readlines() if len(word.strip()) == 5]
 
-        with open("dictionnaire.txt", 'r', encoding='utf-8') as file:
-            french_words = [word.strip().upper() for word in file.readlines() if len(word.strip()) == 5]
+            if not french_words:
+                raise ValueError("No 5-letter words found in the French dictionary.")
 
-        if not french_words:
-            raise ValueError("No 5-letter words found in the French dictionary.")
+            def enter_actionFR(user):
+                nonlocal iRow
+                nonlocal first
+                nonlocal mots
+                  # Call the function to get a French word
+                # see what the user guessed
+                if user.upper() in french_words:
+                    # First try congrats
+                    if user == mots and first == 0:
+                        gw.show_message("Premiere essaie!!! Waoh, bien joué!!!!")
+                    elif user == mots:
+                        gw.show_message("Waoh! bien joué!")
+                        set_color_fr(user, mots)
+                    else:
+                        set_color_fr(user, mots)
+                    iRow += 1
+                    gw.set_current_row(iRow)
+                else:
+                    gw.show_message("Ce n'est pas un mot. Il faut reessayer\n et apprendre de la vocabulaire!")
+                first += 1
 
-        def enter_actionFR(mots):
-            if mots.upper() in french_words:
-                gw.show_message("Voici un message temporaire")
-            else:
-                gw.show_message("Ce mot n'est pas dans la liste")
+            def choose_a_french_word():
+                mots = random.choice(french_words)
+                return mots
 
-            gw.change_current_row()
+            def set_color_fr(user, mots):
+                # help with duplicates
+                track = {letter: 0 for letter in user}
+                # loop through the squares and match the rows.
+                for ea in range(len(user)):
+                    if user[ea] == mots[ea]:
+                        gw.set_square_color(iRow, ea, CORRECT_COLOR)
+                        track[user[ea]] += 1
+                    elif user[ea] in mots and track[user[ea]] == 0:
+                        gw.set_square_color(iRow, ea, PRESENT_COLOR)
+                        track[user[ea]] += 1
+                    else:
+                        gw.set_square_color(iRow, ea, MISSING_COLOR)
+                print(track)
 
-        def choose_a_french_word():
-            return random.choice(french_words)
+           
 
-        def display_wordFR():
+            # Assuming the following lines are part of your program
+            iRow = 0
+            gw = WordleGWindow()
             mots = choose_a_french_word()
-            i = 5
-            for letter in mots:
-                gw.set_square_letter(0, i - N_COLS, letter)
-                i += 1
-                print(letter)
-            return mots
-
-        # Assuming the following lines are part of your program
-
-        gw = WordleGWindow()
-
- #       display_wordFR()
-        
-
-        # Assuming your event listener setup is within the graphics module
-        gw.add_enter_listener(lambda mots: enter_actionFR(mots))
-        wordle()
        
 
+            # Assuming your event listener setup is within the graphics module
+            gw.add_enter_listener(lambda user: enter_actionFR(user))
+            wordle()
 
 
-
-# Startup code
+    # Startup code
 
 if __name__ == "__main__":
-   wordle()
+    wordle()
