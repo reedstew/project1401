@@ -11,19 +11,37 @@ from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
 
 # Change colors for colorblind:
-CORRECT_COLOR = "#1F7DF1"
-PRESENT_COLOR = "#F19A1F"
+
+
 #Initiate LANG variable
 LANG = 'ENG'
 
 def wordle():
     global LANG
 
+
+
     lang_input = input('Language English or Francais?: ')
     if lang_input[0].lower() == 'f':
         LANG = 'FR'
     elif lang_input[0].lower() == 'e':
         LANG = 'ENG'
+    else:
+        print('Must enter a valid language answer')
+
+    if LANG == 'ENG':
+        colorblind_input = input('Are you colorbline? (y/n): ')
+    elif LANG == 'FR':
+        colorblind_input = input('Etes-vous daltonien? (oui/no): ')
+
+    if colorblind_input[0].lower() == 'y' or colorblind_input[0].lower() == 'o':
+        CORRECT_COLOR = "#1F7DF1"
+        PRESENT_COLOR = "#F19A1F"
+    elif colorblind_input[0].lower() == 'n':
+        CORRECT_COLOR = "#66BB66"
+        PRESENT_COLOR = "#CCBB66" 
+
+
 
     if LANG =='ENG':
         #track if first try
