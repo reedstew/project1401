@@ -151,6 +151,7 @@ def wordle():
 
             def choose_a_french_word():
                 mots = random.choice(french_words)
+                print(mots)
                 return mots
 
             def set_color_fr(user, mots):
