@@ -30,7 +30,7 @@ def wordle():
         print('Must enter a valid language answer')
 
     if LANG == 'ENG':
-        colorblind_input = input('Are you colorbline? (y/n): ')
+        colorblind_input = input('Are you colorblind? (y/n): ')
     elif LANG == 'FR':
         colorblind_input = input('Etes-vous daltonien? (oui/no): ')
 
